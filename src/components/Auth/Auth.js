@@ -1,13 +1,13 @@
 import { React, useState } from 'react';
+import { NavLink, useParams } from 'react-router-dom';
 import { signInUser, signUpUser } from '../../services/user';
 import './Auth.css';
-import classNames from 'classnames';
 import { useAuth } from '../../context/UserContext';
 
 export function Auth() {
   const { setCurrentUser } = useAuth();
 
-  const [type, setType] = useState('signin');
+  const { type } = useParams();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -29,12 +29,8 @@ export function Auth() {
   return (
     <div className="auth">
       <div className="tabs">
-        <h3 className={classNames({ active: type === 'signin' })} onClick={() => setType('signin')}>
-            Sign In
-        </h3>
-        <h3 className={classNames({ active: type === 'signup' })} onClick={() => setType('signup')}>
-            Sign Up
-        </h3>
+        <NavLink to="/auth/sign-in" className="link" activeStyle={{ textDecoration: 'underline' }}>Sign In</NavLink>
+        <NavLink to="/auth/sign-up" className="link" activeStyle={{ textDecoration: 'underline' }}>Sign Up</NavLink>
       </div>
       <div className="error-message">{errorMessage}</div>
       <form className="form" onSubmit={handleSubmit}>

@@ -14,3 +14,10 @@ export async function toggleCompleted(id, is_complete) {
     .match('id', id);
   return checkError(resp);
 }
+
+export async function createNew(task) {
+  const resp = await client
+    .from('todos')
+    .insert([{ task: task }]);
+  return checkError(resp);
+}

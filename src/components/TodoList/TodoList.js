@@ -1,9 +1,10 @@
 import './TodoList.css'; 
 import { React, useEffect, useState } from 'react';
-import { fetchToDo, toggleCompleted } from '../../services/todo';
+import { createNew, fetchToDo, toggleCompleted } from '../../services/todo';
 
 export default function TodoList() {
   const [tasks, setTasks] = useState([]);
+  const [newTask, setNewTask] = useState('');
 
   useEffect (() => {
     const fetchData = async () => {
@@ -13,9 +14,16 @@ export default function TodoList() {
     fetchData();
   }, []);
 
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//   };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    await createNew(newTask);
+
+    setNewTask('');
+
+    const updatedTodos = await fetchToDo();
+    setTasks(updatedTodos);
+  };
 
   const handleClick = async (task) => {
     await toggleCompleted(task.id, !task.is_complete);
@@ -41,6 +49,13 @@ export default function TodoList() {
           </li>;
         })}
       </ul>
+      <input
+        value={newTask}
+        onChange={(e) => setNewTask(e.target.value)}
+        type="text"
+        placeholder='Add New Task Here'
+      />{' '}
+      <button onClick={handleSubmit}>Submit</button>
     </>
   );
 }
