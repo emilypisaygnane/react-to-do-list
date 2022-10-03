@@ -1,5 +1,6 @@
 import { signOutUser } from '../../services/user';
 import './Header.css';
+import { useAuth } from '../../context/UserContext';
 
 export default function Header() {
   const { currentUser, setCurrentUser } = useAuth();

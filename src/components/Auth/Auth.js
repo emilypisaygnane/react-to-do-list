@@ -23,13 +23,13 @@ export function Auth() {
     } catch (e) {
       e.message
         ? setErrorMessage(e.message)
-        : setErrorMessage('Oopsies, something went wrong.')
+        : setErrorMessage('Oopsies, something went wrong.');
     }
   };
   return (
     <div className="auth">
       <div className="tabs">
-        <h3 className={classNames({ active: type === 'signin'})} onClick={() => setType('signin')}>
+        <h3 className={classNames({ active: type === 'signin' })} onClick={() => setType('signin')}>
             Sign In
         </h3>
         <h3 className={classNames({ active: type === 'signup' })} onClick={() => setType('signup')}>

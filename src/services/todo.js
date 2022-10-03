@@ -6,3 +6,11 @@ export async function fetchToDo() {
     .select('*');
   return checkError(resp);
 }
+
+export async function toggleCompleted(id, is_complete) {
+  const resp = await client
+    .from('todos')
+    .update({ is_complete })
+    .match('id', id);
+  return checkError(resp);
+}
