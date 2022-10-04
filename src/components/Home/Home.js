@@ -1,10 +1,10 @@
 import './Home.css';
-import { useAuth } from '../../context/UserContext';
 import Auth from '../Auth/Auth';
 import TodoList from '../TodoList/TodoList';
+import { authUser } from '../../services/user';
 
 export default function Home() {
-  const { currentUser } = useAuth();
+  const { currentUser } = authUser();
   return (
     <div>
       {!currentUser && <Auth />}

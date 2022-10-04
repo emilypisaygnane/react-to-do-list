@@ -7,17 +7,19 @@ export async function fetchToDo() {
   return checkError(resp);
 }
 
-export async function toggleCompleted(id, is_complete) {
+export async function toggleCompleted(todo) {
   const resp = await client
     .from('todos')
-    .update({ is_complete })
-    .match('id', id);
+    .update({ complete: true })
+    .match({ id : todo.id })
+    .single();
   return checkError(resp);
 }
 
-export async function createNew(task) {
+export async function createNew(description) {
   const resp = await client
     .from('todos')
-    .insert([{ task: task }]);
+    .insert([{ description }])
+    .single();
   return checkError(resp);
 }

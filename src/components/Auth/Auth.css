@@ -1,0 +1,27 @@
+.auth {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .tabs {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+  
+  .tabs h3:first-child {
+    padding-right: 10px;
+  }
+  
+  .tabs h3 {
+    cursor: pointer;
+    border-bottom: none;
+    margin: 0;
+    padding-bottom: 5px;
+  }
+  
+  .tabs h3.active {
+    border-bottom: 2px solid var(--color-blue);
+  }
+  

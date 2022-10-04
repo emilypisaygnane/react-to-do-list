@@ -1,24 +1,16 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useState } from 'react';
 import { getUser } from '../services/user';
 
 
 const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(getUser());
-
+  const currentUser = getUser();
+  const [user, setUser] = useState(currentUser);
+  
   return (
-    <UserContext.Provider value={{ currentUser, setCurrentUser }}>{children}</UserContext.Provider>
+    <UserContext.Provider value={{ user, setUser }}>{children}</UserContext.Provider>
   );
 };
 
-const useAuth = () => {
-  const context = useContext(UserContext);
-
-  if (context === undefined) {
-    throw Error;
-  }
-  return context;
-};
-
-export { UserProvider, useAuth };
+export { UserContext, UserProvider };

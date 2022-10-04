@@ -1,26 +1,21 @@
-import { client, checkError } from './client.js';
+import { client, checkError } from './client';
 
 export function getUser() {
-  return client.auth.session() && client.auth.session().user;
+  return client.auth.currentUser;
 }
 
-export async function signUpUser(email, password) {
-  const { user, error } = await client.auth.signUp({ email, password });
-  if (error) {
-    throw error;
+export async function authUser(email, password, type) {
+  let response;
+  if (type === 'sign-up') {
+    response = await client.auth.signUp({ email, password });
+  } else {
+    response = await client.auth.signIn({ email, password });
   }
-  return user;
+  return response.user;
 }
 
-export async function signInUser(email, password) {
-  const { user, error } = await client.auth.signIn({ email, password });
-  if (error) {
-    throw error;
-  }
-  return user;
-}
 
-export async function signOutUser() {
+export async function signOut() {
   const resp = await client.auth.signOut();
   return checkError(resp);
 }

@@ -1,61 +1,51 @@
 import './TodoList.css'; 
-import { React, useEffect, useState } from 'react';
-import { createNew, fetchToDo, toggleCompleted } from '../../services/todo';
+import { React, useContext, useState } from 'react';
+import { Redirect } from 'react-router-dom';
+import { UserContext } from '../../context/UserContext';
+import { createNew, toggleCompleted } from '../../services/todo';
+import { useTodo } from '../../Hooks/useTodo';
 
 export default function TodoList() {
-  const [tasks, setTasks] = useState([]);
-  const [newTask, setNewTask] = useState('');
+  const { todos, setTodos } = useTodo();
+  const [description, setDescription] = useState('');
+  const { user } = useContext(UserContext);
 
-  useEffect (() => {
-    const fetchData = async () => {
-      const resp = await fetchToDo();
-      setTasks(resp);
-    };
-    fetchData();
-  }, []);
+  if (!user) {
+    return <Redirect to="/auth/sign-in" />;
+  }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    await createNew(newTask);
-
-    setNewTask('');
-
-    const updatedTodos = await fetchToDo();
-    setTasks(updatedTodos);
+  const handleSubmit = async () => {
+    const { data } = await createNew(description);
+    setTodos(prevState => [...prevState, data]);
+    setDescription('');
   };
 
-  const handleClick = async (task) => {
-    await toggleCompleted(task.id, !task.is_complete);
-  
-    setTasks((prevState) => 
-      prevState.map((todo) =>
-        todo.id === task.id ? { ...task, is_complete: !task.is_complete } : todo
-      )
-    );
+  const handleComplete = async (todo) => {
+    const { data } = await toggleCompleted(todo);
+    setTodos(prevState => prevState.map(item => (item.id === data.id ? data : item)));
   };
+
   return (
     <>
-      <h3>My To Do List</h3>
+      <div className='todo-form'>
+        <input type="text" value={description}
+          placeholder="Enter New Task Here"
+          onChange={(e) => setDescription(e.target.value)} />
+        <button onClick={handleSubmit}>Add</button> 
+      </div>
+      <h3>My To Do List:</h3>
       <ul className="todo-list">
-        {tasks.map((task) => {
-          <li key={task.id}>
+        {todos.map((todo) => {
+          <li key={todo.id}>
             <input
-              checked={task.is_complete}
+              checked={todo.complete}
               type="checkbox"
-              onChange={() => handleClick(task)}
-            ></input>
-            {task.task}
+              onChange={() => handleComplete(todo)} />
+            {todo.description}
           </li>;
-        })}
+        }
+        )}
       </ul>
-      <input
-        value={newTask}
-        onChange={(e) => setNewTask(e.target.value)}
-        type="text"
-        placeholder='Add New Task Here'
-      />{' '}
-      <button onClick={handleSubmit}>Submit</button>
     </>
   );
 }

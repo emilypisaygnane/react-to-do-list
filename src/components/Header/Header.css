@@ -1,0 +1,21 @@
+header {
+    height: 40px;
+    background-color: lightgrey;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+  }
+  
+  header a,
+  header .link {
+    text-decoration: none;
+    color: Black;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  header h3 {
+    color: Black;
+  }
