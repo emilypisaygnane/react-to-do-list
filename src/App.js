@@ -19,14 +19,14 @@ function App() {
           <TodoList />
         </Route>
 
-        <Route path="*">
-          <Redirect to="Auth/Auth"/>
+        <Route path="/" >
+          <Redirect to="/todos" />
         </Route>
 
-        <Route path="/" >
-          <Auth/>
+        <Route path="*">
+          <Redirect to="/"/>
         </Route>
-        
+
       </Switch>
     </div>
  

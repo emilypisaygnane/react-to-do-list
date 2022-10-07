@@ -9,8 +9,9 @@ export function Auth() {
   const { type } = useParams();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const clickHandler = async () => {
+  // console.log(email, password);
+  const clickHandler = async (e) => {
+    e.preventDefault();
     const userResp = await authUser(email, password, type);
     setUser(userResp);
     setEmail('');
@@ -24,22 +25,24 @@ export function Auth() {
   return (
     <div className="auth">
 
-      <div className="tabs">
-        <NavLink to="/auth/sign-in" className="link" >Sign In</NavLink>
-        <NavLink to="/auth/sign-up" className="link" >Sign Up</NavLink>
-      </div>
-        
-      <div className="form-controls">
-        <label>Email:</label>
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-      </div>
+      <form>
+        <div className="tabs">
+          <NavLink to="/auth/sign-in" className="link" >Sign In</NavLink>
+          <NavLink to="/auth/sign-up" className="link" >Sign Up</NavLink>
+        </div>
+          
+        <div className="form-controls">
+          <label>Email:</label>
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+        </div>
 
-      <div className="form-controls">
-        <label>Password:</label>
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      </div>
+        <div className="form-controls">
+          <label>Password:</label>
+          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        </div>
 
-      <button onClick={clickHandler}>Submit</button>
+        <button onClick={(e) => clickHandler(e)}>Submit</button>
+      </form>
     </div>
   );
 }
