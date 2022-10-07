@@ -2,8 +2,9 @@ import './TodoList.css';
 import { React, useContext, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
-import { createNew, toggleCompleted } from '../../services/todo';
+import { deleteToDos, fetchToDo, createNew, toggleCompleted } from '../../services/todo';
 import { useTodo } from '../../Hooks/useTodo';
+
 
 export default function TodoList() {
   const { todos, setTodos } = useTodo();
@@ -25,6 +26,11 @@ export default function TodoList() {
     setTodos(prevState => prevState.map(item => (item.id === data.id ? data : item)));
   };
 
+  const handleDelete = async () => {
+    await deleteToDos();
+    setTodos(await fetchToDo());
+  };
+
   return (
     <>
       <div className='todo-form'>
@@ -33,6 +39,7 @@ export default function TodoList() {
           onChange={(e) => setDescription(e.target.value)} />
         <button onClick={handleSubmit}>Add</button> 
       </div>
+      <button className='delete' onClick={handleDelete}>Delete Completed Todos</button>
       <h3>My To Do List:</h3>
       <ul className="todo-list">
         {todos.map((todo) => {

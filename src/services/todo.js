@@ -23,3 +23,11 @@ export async function createNew(description) {
     .single();
   return checkError(resp);
 }
+
+export async function deleteToDos() {
+  const resp = await client
+    .from('todos')
+    .delete('*')
+    .match({ complete: true });
+  return checkError(resp);
+}
