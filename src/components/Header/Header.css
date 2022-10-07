@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Poiret+One&display=swap');
+
+.header {
+  height: 10vh;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Poiret One', cursive;
+  font-weight: bold;
+  background: linear-gradient(68.6deg, rgb(252, 165, 241) 1.8%, rgb(181, 255, 255) 100.5%);
+};
+
+.header h2 {
+  margin: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-family: 'Poiret One', cursive;
+  font-weight: bold;
+  padding: 4vh;
+}
+
+.header button {
+  margin: 5vh;
+  font-family: 'Poiret One', cursive;
+  color: black;
+  font-weight: bold;
+  background-color:  #edb1f1;
+}
+
+.header div {
+  position: absolute;
+  font-family: 'Poiret One', cursive;
+  right: 0;
+  left: 0;
+  margin-right: 30vh;
+  margin-left: 30vh;
+}
